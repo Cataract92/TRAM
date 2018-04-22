@@ -8,93 +8,112 @@ public class TramInstructionHandler {
         this.thread = thread;
     }
 
+    private int spp(int d, int pp, int fp)
+    {
+        if (d == 0)
+            return pp;
+        else
+            return spp(d-1,thread.STACK.get(fp+3),thread.STACK.get(fp+4));
+    }
+
+    private int sfp(int d, int pp, int fp)
+    {
+        if (d == 0)
+            return fp;
+        else
+            return sfp(d-1,thread.STACK.get(fp+3),thread.STACK.get(fp+4));
+    }
+
     void handleConst(int a1)
     {
-        thread.STACK.set(++thread.TOP, a1);
+        thread.STACK.set(thread.TOP + 1, a1);
+        thread.TOP++;
         thread.PC++;
     }
 
-    void handleLoad(int a1)
+    void handleLoad(int k, int d)
     {
-        thread.STACK.set(++thread.TOP,thread.STACK.get(thread.PP + a1));
+        thread.TOP++;
+        thread.STACK.set(thread.TOP,thread.STACK.get(spp(d,thread.PP,thread.FP)+k));
         thread.PC++;
     }
 
-    void handleStore(int a1)
+    void handleStore(int k, int d)
     {
-        thread.STACK.set(thread.PP + a1, thread.STACK.get(thread.TOP--));
+        thread.STACK.set(spp(d,thread.PP,thread.FP)+k, thread.STACK.get(thread.TOP));
+        thread.TOP--;
         thread.PC++;
     }
 
     void handleAdd()
     {
+        thread.STACK.set(thread.TOP -1 , thread.STACK.get(thread.TOP-1) + thread.STACK.get(thread.TOP));
         thread.TOP--;
-        thread.STACK.set(thread.TOP, thread.STACK.get(thread.TOP) + thread.STACK.get(thread.TOP+1));
         thread.PC++;
     }
 
     void handleSub()
     {
+        thread.STACK.set(thread.TOP -1 , thread.STACK.get(thread.TOP-1) - thread.STACK.get(thread.TOP));
         thread.TOP--;
-        thread.STACK.set(thread.TOP, thread.STACK.get(thread.TOP) - thread.STACK.get(thread.TOP+1));
         thread.PC++;
     }
 
     void handleMul()
     {
+        thread.STACK.set(thread.TOP -1 , thread.STACK.get(thread.TOP-1) * thread.STACK.get(thread.TOP));
         thread.TOP--;
-        thread.STACK.set(thread.TOP, thread.STACK.get(thread.TOP) * thread.STACK.get(thread.TOP+1));
         thread.PC++;
     }
 
     void handleDiv()
     {
+        thread.STACK.set(thread.TOP -1 , thread.STACK.get(thread.TOP-1) / thread.STACK.get(thread.TOP));
         thread.TOP--;
-        thread.STACK.set(thread.TOP, thread.STACK.get(thread.TOP) / thread.STACK.get(thread.TOP+1));
         thread.PC++;
     }
 
     void handleLt()
     {
-        thread.TOP--;
-        if (thread.STACK.get(thread.TOP) < thread.STACK.get(thread.TOP + 1))
-            thread.STACK.set(thread.TOP,1);
+        if (thread.STACK.get(thread.TOP - 1) < thread.STACK.get(thread.TOP))
+            thread.STACK.set(thread.TOP - 1,1);
         else
-            thread.STACK.set(thread.TOP,0);
+            thread.STACK.set(thread.TOP - 1,0);
 
+        thread.TOP--;
         thread.PC++;
     }
 
     void handleGt()
     {
-        thread.TOP--;
-        if (thread.STACK.get(thread.TOP) > thread.STACK.get(thread.TOP + 1))
-            thread.STACK.set(thread.TOP,1);
+        if (thread.STACK.get(thread.TOP - 1) > thread.STACK.get(thread.TOP))
+            thread.STACK.set(thread.TOP - 1,1);
         else
-            thread.STACK.set(thread.TOP,0);
+            thread.STACK.set(thread.TOP - 1,0);
 
+        thread.TOP--;
         thread.PC++;
     }
 
     void handleEQ()
     {
-        thread.TOP--;
-        if (thread.STACK.get(thread.TOP) == thread.STACK.get(thread.TOP + 1))
-            thread.STACK.set(thread.TOP,1);
+        if (thread.STACK.get(thread.TOP - 1) == thread.STACK.get(thread.TOP))
+            thread.STACK.set(thread.TOP - 1,1);
         else
-            thread.STACK.set(thread.TOP,0);
+            thread.STACK.set(thread.TOP - 1,0);
 
+        thread.TOP--;
         thread.PC++;
     }
 
     void handleNEQ()
     {
-        thread.TOP--;
-        if (thread.STACK.get(thread.TOP) != thread.STACK.get(thread.TOP + 1))
-            thread.STACK.set(thread.TOP,1);
+        if (thread.STACK.get(thread.TOP - 1) != thread.STACK.get(thread.TOP))
+            thread.STACK.set(thread.TOP - 1,1);
         else
-            thread.STACK.set(thread.TOP,0);
+            thread.STACK.set(thread.TOP - 1,0);
 
+        thread.TOP--;
         thread.PC++;
     }
 
@@ -123,13 +142,27 @@ public class TramInstructionHandler {
         thread.PC++;
     }
 
-    void handleInvoke()
+    void handleInvoke(int n, int p, int d)
     {
+        thread.STACK.set(thread.TOP +1,thread.PP);
+        thread.STACK.set(thread.TOP +2,thread.FP);
+        thread.STACK.set(thread.TOP +3,thread.PC+1);
+        thread.STACK.set(thread.TOP +4,spp(d,thread.PP,thread.FP));
+        thread.STACK.set(thread.TOP +5,sfp(d,thread.PP,thread.FP));
+        thread.PP = thread.TOP - n + 1;
+        thread.FP = thread.TOP +1;
+        thread.TOP += 5;
+        thread.PC = p;
 
     }
 
     void handleReturn()
     {
-
+        int res = thread.STACK.get(thread.TOP);
+        thread.TOP = thread.PP;
+        thread.PC = thread.STACK.get(thread.FP);
+        thread.PP = thread.STACK.get(thread.FP +1);
+        thread.FP = thread.STACK.get(thread.FP +2);
+        thread.STACK.set(thread.TOP,res);
     }
 }
