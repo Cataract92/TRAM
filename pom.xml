@@ -1,5 +1,5 @@
 <project>
-    <modelVersion>0.0.1</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
     <groupId>uap18.cataract92</groupId>
     <artifactId>tram</artifactId>
     <version>1</version>
@@ -15,4 +15,16 @@
             <version>2.11.0</version>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

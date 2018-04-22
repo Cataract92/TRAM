@@ -33,8 +33,9 @@ public class TramInstructionHandler {
 
     void handleLoad(int k, int d)
     {
+
+        thread.STACK.set(thread.TOP+1,thread.STACK.get(spp(d,thread.PP,thread.FP)+k));
         thread.TOP++;
-        thread.STACK.set(thread.TOP,thread.STACK.get(spp(d,thread.PP,thread.FP)+k));
         thread.PC++;
     }
 
@@ -144,9 +145,10 @@ public class TramInstructionHandler {
 
     void handleInvoke(int n, int p, int d)
     {
-        thread.STACK.set(thread.TOP +1,thread.PP);
-        thread.STACK.set(thread.TOP +2,thread.FP);
-        thread.STACK.set(thread.TOP +3,thread.PC+1);
+
+        thread.STACK.set(thread.TOP +1,thread.PC+1);
+        thread.STACK.set(thread.TOP +2,thread.PP);
+        thread.STACK.set(thread.TOP +3,thread.FP);
         thread.STACK.set(thread.TOP +4,spp(d,thread.PP,thread.FP));
         thread.STACK.set(thread.TOP +5,sfp(d,thread.PP,thread.FP));
         thread.PP = thread.TOP - n + 1;

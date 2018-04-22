@@ -1,43 +1,59 @@
 package de.unitrier.st.uap.s18.tram.TRAM;
 
 import de.unitrier.st.uap.s18.tram.Instruction;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.config.LoggerConfig;
 
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
 
-public class TRAMThread extends Thread{
+public class TRAMThread implements Callable<Integer>{
 
     private Instruction[] programm;
-    private TramInstructionHandler handler;
-    private boolean isRunning = false;
 
     DynamicStack STACK = new DynamicStack();
     int PP, TOP = -1, FP, PC;
 
-
-
+    private TramInstructionHandler handler;
+    private Logger logger = LogManager.getRootLogger();
 
     public TRAMThread(Instruction[] programm) {
         this.programm = programm;
-        handler = new TramInstructionHandler(this);
+        this.handler = new TramInstructionHandler(this);
     }
 
-    @Override
-    public void run() {
-        super.run();
-        this.isRunning = true;
-        System.out.println(executeProgramm());
-        this.isRunning = false;
-
+    public Integer call() throws Exception {
+        return executeProgramm();
     }
 
-    public boolean isRunning() {
-        return isRunning;
-    }
-
-    public int executeProgramm()
+    private int executeProgramm()
     {
-        while (PC >= 0)
+        while (PC >= 0) {
+            StringBuilder output = new StringBuilder("After instruction = "+programm[PC]);
             executeInst(programm[PC]);
+            output.append("; configuration = PC = ").append(PC).append("; PP = ").append(PP).append("; FP = ").append(FP).append("; TOP = ").append(TOP).append("\n");
+            output.append("Stack: \n");
+
+            for (int i = 0; i<= TOP; i++)
+            {
+                output.append("[").append(i).append("] = ").append(STACK.get(i));
+                if (PP == i)
+                    output.append(" <-- PP");
+                if (FP == i)
+                    output.append(" <-- FP");
+                if (TOP == i)
+                    output.append(" <-- TOP");
+
+                output.append("\n");
+            }
+
+            output.append("\n");
+
+            logger.debug(output);
+        }
         return STACK.get(TOP);
     }
 
@@ -63,9 +79,5 @@ public class TRAMThread extends Thread{
             case Instruction.RETURN : handler.handleReturn();break;
         }
     }
-
-
-
-
 
 }

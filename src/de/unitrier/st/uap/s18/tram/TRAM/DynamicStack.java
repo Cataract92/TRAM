@@ -1,6 +1,5 @@
 package de.unitrier.st.uap.s18.tram.TRAM;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class DynamicStack{
