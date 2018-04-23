@@ -281,4 +281,12 @@ public class Instruction
 			new Instruction(Instruction.MUL), 
 			new Instruction(Instruction.RETURN) // --> return square
 	};
+	
+	static Instruction[] programEuclid = new Instruction[] {
+			new Instruction(Instruction.CONST, 10),
+			new Instruction(Instruction.CONST, 15),
+			new Instruction(Instruction.INVOKE,2,3,0),
+			new Instruction(Instruction.IFZERO, 15),
+			new Instruction(Instruction.LOAD, 0, 0)
+	};
 }

@@ -1,18 +1,16 @@
 package de.unitrier.st.uap.s18.tram.TRAM;
 
-import de.unitrier.st.uap.s18.tram.Instruction;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import de.unitrier.st.uap.s18.tram.Program;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class TRAM {
-
-    private Instruction[] programm;
-    private TramInstructionHandler handler;
 
     private ExecutorService executorService;
 
@@ -39,9 +37,9 @@ public class TRAM {
         }).start();
     }
 
-    public void startProgramm(Instruction[] programm)
+    public void startProgramm(Program program)
     {
-        Future<Integer> futureTask = executorService.submit(new TRAMThread(programm));
+        Future<Integer> futureTask = executorService.submit(new TRAMThread(program));
         allFutures.add(futureTask);
     }
 

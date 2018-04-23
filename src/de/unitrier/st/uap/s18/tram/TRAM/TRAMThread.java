@@ -1,28 +1,28 @@
 package de.unitrier.st.uap.s18.tram.TRAM;
 
 import de.unitrier.st.uap.s18.tram.Instruction;
-import org.apache.logging.log4j.Level;
+import de.unitrier.st.uap.s18.tram.Program;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.config.LoggerConfig;
 
-import java.util.ArrayList;
 import java.util.concurrent.Callable;
-import java.util.concurrent.FutureTask;
 
 public class TRAMThread implements Callable<Integer>{
 
-    private Instruction[] programm;
+    private Instruction[] instructions;
 
     DynamicStack STACK = new DynamicStack();
-    int PP, TOP = -1, FP, PC;
+    int PP, TOP, FP, PC;
 
     private TramInstructionHandler handler;
     private Logger logger = LogManager.getRootLogger();
 
-    public TRAMThread(Instruction[] programm) {
-        this.programm = programm;
+    public TRAMThread(Program program) {
+        this.instructions = program.getInstructions();
         this.handler = new TramInstructionHandler(this);
+        this.PP = program.getPP();
+        this.TOP = program.getTOP();
+        this.PC = program.getPC();
     }
 
     public Integer call() throws Exception {
@@ -32,8 +32,8 @@ public class TRAMThread implements Callable<Integer>{
     private int executeProgramm()
     {
         while (PC >= 0) {
-            StringBuilder output = new StringBuilder("After instruction = "+programm[PC]);
-            executeInst(programm[PC]);
+            StringBuilder output = new StringBuilder("After instruction = "+ instructions[PC]);
+            executeInst(instructions[PC]);
             output.append("; configuration = PC = ").append(PC).append("; PP = ").append(PP).append("; FP = ").append(FP).append("; TOP = ").append(TOP).append("\n");
             output.append("Stack: \n");
 
