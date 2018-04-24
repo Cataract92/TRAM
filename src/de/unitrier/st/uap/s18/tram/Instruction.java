@@ -283,10 +283,25 @@ public class Instruction
 	};
 	
 	static Instruction[] programEuclid = new Instruction[] {
+			// Init
 			new Instruction(Instruction.CONST, 10),
 			new Instruction(Instruction.CONST, 15),
 			new Instruction(Instruction.INVOKE,2,3,0),
-			new Instruction(Instruction.IFZERO, 15),
-			new Instruction(Instruction.LOAD, 0, 0)
+			
+			new Instruction(Instruction.HALT),
+			
+			// Euclid
+			new Instruction(Instruction.LOAD, 1, 0),
+			new Instruction(Instruction.IFZERO, 8),
+			new Instruction(Instruction.LOAD, 0, 0),
+			new Instruction(Instruction.RETURN),
+			
+			
+			
+			//
+			
+			
+			
+			
 	};
 }
