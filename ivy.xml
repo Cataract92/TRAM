@@ -1,0 +1,11 @@
+<!--
+  ~ Nico Feld - 1169233
+  -->
+
+<ivy-module version="2.0">
+    <info organisation="apache" module="TRAM"/>
+    <dependencies>
+        <dependency org="org.apache.logging.log4j" name="log4j-api" rev="2.11.0" />
+        <dependency org="org.apache.logging.log4j" name="log4j-core" rev="2.11.0" />
+    </dependencies>
+</ivy-module>

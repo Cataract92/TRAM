@@ -1,3 +1,7 @@
+/*
+ * Nico Feld - 1169233
+ */
+
 package de.unitrier.st.uap.s18.tram.TRAM;
 
 import java.util.Arrays;

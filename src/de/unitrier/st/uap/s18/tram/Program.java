@@ -1,11 +1,12 @@
+/*
+ * Nico Feld - 1169233
+ */
+
 package de.unitrier.st.uap.s18.tram;
 
-/**
- * Created by nico on 23.04.18.
- */
 public class Program
 {
-	private Instruction[] instructions = null;
+	private Instruction[] instructions;
 	
 	private int TOP, PC, PP;
 	

@@ -1,10 +1,14 @@
+/*
+ * Nico Feld - 1169233
+ */
+
 package de.unitrier.st.uap.s18.tram.TRAM;
 
 public class TramInstructionHandler {
 
-    private TRAMThread thread = null;
+    private TRAMThread thread;
 
-    public TramInstructionHandler(TRAMThread thread) {
+    TramInstructionHandler(TRAMThread thread) {
         this.thread = thread;
     }
 
@@ -33,7 +37,6 @@ public class TramInstructionHandler {
 
     void handleLoad(int k, int d)
     {
-
         thread.STACK.set(thread.TOP+1,thread.STACK.get(spp(d,thread.PP,thread.FP)+k));
         thread.TOP++;
         thread.PC++;
@@ -145,7 +148,6 @@ public class TramInstructionHandler {
 
     void handleInvoke(int n, int p, int d)
     {
-
         thread.STACK.set(thread.TOP +1,thread.PC+1);
         thread.STACK.set(thread.TOP +2,thread.PP);
         thread.STACK.set(thread.TOP +3,thread.FP);
@@ -155,7 +157,6 @@ public class TramInstructionHandler {
         thread.FP = thread.TOP +1;
         thread.TOP += 5;
         thread.PC = p;
-
     }
 
     void handleReturn()

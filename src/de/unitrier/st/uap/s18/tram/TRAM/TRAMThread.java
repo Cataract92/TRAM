@@ -1,3 +1,7 @@
+/*
+ * Nico Feld - 1169233
+ */
+
 package de.unitrier.st.uap.s18.tram.TRAM;
 
 import de.unitrier.st.uap.s18.tram.Instruction;
@@ -5,9 +9,7 @@ import de.unitrier.st.uap.s18.tram.Program;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.concurrent.Callable;
-
-public class TRAMThread implements Callable<Integer>{
+public class TRAMThread implements Runnable{
 
     private Instruction[] instructions;
 
@@ -25,32 +27,32 @@ public class TRAMThread implements Callable<Integer>{
         this.PC = program.getPC();
     }
 
-    public Integer call() throws Exception {
-        return executeProgramm();
+    @Override
+    public void run() {
+        System.out.println("Ergebniss: "+executeProgramm());
     }
 
     private int executeProgramm()
     {
         while (PC >= 0) {
-            StringBuilder output = new StringBuilder("After instruction = "+ instructions[PC]);
+            String output = "After instruction = "+ instructions[PC];
             executeInst(instructions[PC]);
-            output.append("; configuration = PC = ").append(PC).append("; PP = ").append(PP).append("; FP = ").append(FP).append("; TOP = ").append(TOP).append("\n");
-            output.append("Stack: \n");
+            output += "; configuration = PC = "+PC+"; PP = "+PP+"; FP = "+FP+"; TOP = "+TOP+"\nStack: \n";
 
             for (int i = 0; i<= TOP; i++)
             {
-                output.append("[").append(i).append("] = ").append(STACK.get(i));
+                output += "["+i+"] = " +STACK.get(i);
                 if (PP == i)
-                    output.append(" <-- PP");
+                    output += " <-- PP";
                 if (FP == i)
-                    output.append(" <-- FP");
+                    output += " <-- FP";
                 if (TOP == i)
-                    output.append(" <-- TOP");
+                    output += " <-- TOP";
 
-                output.append("\n");
+                output += "\n";
             }
 
-            output.append("\n");
+            output += "\n";
 
             logger.debug(output);
         }

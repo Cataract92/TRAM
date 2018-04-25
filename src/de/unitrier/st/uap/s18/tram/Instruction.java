@@ -1,3 +1,7 @@
+/*
+ * Nico Feld - 1169233
+ */
+
 /**
  *  Instructions for TRAM 2018
  */
@@ -281,106 +285,67 @@ public class Instruction
 			new Instruction(Instruction.MUL), 
 			new Instruction(Instruction.RETURN) // --> return square
 	};
-	
-	/*
-	EUCLID(a,b)
-	wenn b = 0 dann
-	Ergebnis = a
-	sonst
-	Ergebnis = EUCLID(b, Divisionsrest(a durch b))    // siehe Modulo-Funktion
-	 */
+
+
+    /**
+     * Quellcode: let euclid(a, b) {
+     *                if ( b != 0) then
+     *                    euclid(b, let mod(x,y,i) {
+     *                            do {
+     *                                i += b
+     *                            } while ( i < a || i == a)
+     *                            i = i - b
+     *                            a = a - i
+     *                        } in mod (a,b,0)
+     *            } in euclid(3528,3780)
+     * Annahmen: Die Argumente von euclid werden durch die Kellerzellen 0 und 1 repraesentiert,
+     *           sowie PP=0, FP=0 und TOP=-1
+     */
 	
 	static Instruction[] programEuclid = new Instruction[] {
 			// Init
-			new Instruction(Instruction.CONST, 10),                 // 0
-			new Instruction(Instruction.CONST, 15),                 // 1
-			new Instruction(Instruction.INVOKE,2,4,0), // 2
-			new Instruction(Instruction.HALT),                            // 3
-			// Euclid
-			new Instruction(Instruction.LOAD, 1, 0),           // 4
-			new Instruction(Instruction.IFZERO, 6), // if b == 0    // 5
-			// Return if b == 0
-			new Instruction(Instruction.LOAD, 0, 0),            // 13
-			new Instruction(Instruction.RETURN),                            // 14
-			//
-			new Instruction(Instruction.LOAD, 1, 0),           // 6
-			new Instruction(Instruction.LOAD, 0, 0),           // 7
-			new Instruction(Instruction.LOAD, 1, 0),           // 8
-			new Instruction(Instruction.CONST, 0),                   // 9
-			new Instruction(Instruction.INVOKE,3,15,0),
-			new Instruction(Instruction.INVOKE, 2,5,0), // 11
-			new Instruction(Instruction.RETURN),                            // 12
-			
-			// MOD
-			new Instruction(Instruction.LOAD, 2, 0),         // 15
-			new Instruction(Instruction.LOAD, 0, 0),         // 16
-			new Instruction(Instruction.LT),                              // 17
-			new Instruction(Instruction.IFZERO, 20),                         // 18
-			new Instruction(Instruction.GOTO,24),                          // 19
-			new Instruction(Instruction.LOAD, 2, 0),            // 20
-			new Instruction(Instruction.LOAD, 0, 0),          // 21
-			new Instruction(Instruction.EQ),                                // 22
-			new Instruction(Instruction.IFZERO, 29),                         // 23
-			
-			new Instruction(Instruction.LOAD, 2, 0),          // 24
-			new Instruction(Instruction.LOAD, 1, 0),            // 25
-			new Instruction(Instruction.ADD),                                // 26
-			new Instruction(Instruction.STORE,2,0),            // 27
-			new Instruction(Instruction.GOTO,15),                      // 28
-			
-			new Instruction(Instruction.LOAD, 2, 0),            //29
-			new Instruction(Instruction.LOAD, 1, 0),               //30
-			new Instruction(Instruction.SUB),                               //31
-			new Instruction(Instruction.STORE,2,0),             //32
-			new Instruction(Instruction.LOAD, 0, 0),           //33
-			new Instruction(Instruction.LOAD, 2, 0),          //34
-			new Instruction(Instruction.SUB),                               //35
-			new Instruction(Instruction.RETURN),                            //36
-	};
-	
-	static Instruction[] mod = new Instruction[] {
-			// Init
-			new Instruction(Instruction.CONST, 9),                 // 0
-			new Instruction(Instruction.CONST, 3),                 // 1
-			new Instruction(Instruction.CONST, 0),
-			new Instruction(Instruction.LOAD, 2, 0),         // 15
-			new Instruction(Instruction.LOAD, 0, 0),         // 16
-			new Instruction(Instruction.LT),                              // 17
-			new Instruction(Instruction.IFZERO, 8),
-			new Instruction(Instruction.GOTO,12),
-			new Instruction(Instruction.LOAD, 2, 0),          // 18
-			new Instruction(Instruction.LOAD, 0, 0),          // 19
-			new Instruction(Instruction.EQ),
-			new Instruction(Instruction.IFZERO, 17),                // 20
+	/* 00 */    new Instruction(Instruction.CONST, 3528),
+    /* 01 */    new Instruction(Instruction.CONST, 3780),
+    /* 02 */    new Instruction(Instruction.INVOKE,2,4,0),
+    /* 03 */    new Instruction(Instruction.HALT),
 
-			new Instruction(Instruction.LOAD, 2, 0),          // 29
-			new Instruction(Instruction.LOAD, 1, 0),            // 30
-			new Instruction(Instruction.ADD),                               // 31
-			new Instruction(Instruction.STORE,2,0),             // 32
-			new Instruction(Instruction.GOTO,3),                      // 33
-			
-			new Instruction(Instruction.LOAD, 2, 0),            // 21
-			new Instruction(Instruction.LOAD, 1, 0),            // 22
-			new Instruction(Instruction.SUB),                               // 23
-			new Instruction(Instruction.STORE,2,0),             // 24
-			new Instruction(Instruction.LOAD, 0, 0),            // 25
-			new Instruction(Instruction.LOAD, 2, 0),            // 26
-			new Instruction(Instruction.SUB),                               // 27
-			new Instruction(Instruction.HALT),                            // 28
+            // Euclid
+    /* 04 */    new Instruction(Instruction.LOAD, 1, 0),
+    /* 05 */    new Instruction(Instruction.IFZERO, 13),
+    /* 06 */    new Instruction(Instruction.LOAD, 1, 0),
+    /* 07 */    new Instruction(Instruction.LOAD, 0, 0),
+    /* 08 */    new Instruction(Instruction.LOAD, 1, 0),
+    /* 09 */    new Instruction(Instruction.CONST, 0),
+    /* 10 */    new Instruction(Instruction.INVOKE,3,15,0),
+    /* 11 */    new Instruction(Instruction.INVOKE, 2,4,0),
+    /* 12 */    new Instruction(Instruction.RETURN),
+    /* 13 */    new Instruction(Instruction.LOAD, 0, 0),
+    /* 14 */    new Instruction(Instruction.RETURN),
+
+			// Mod
+    /* 15 */    new Instruction(Instruction.LOAD, 2, 0),
+    /* 16 */    new Instruction(Instruction.LOAD, 0, 0),
+    /* 17 */    new Instruction(Instruction.LT),
+    /* 18 */    new Instruction(Instruction.IFZERO, 20),
+    /* 19 */    new Instruction(Instruction.GOTO,24),
+
+    /* 20 */    new Instruction(Instruction.LOAD, 2, 0),
+    /* 21 */    new Instruction(Instruction.LOAD, 0, 0),
+    /* 22 */    new Instruction(Instruction.EQ),
+    /* 23 */    new Instruction(Instruction.IFZERO, 29),
+    /* 24 */    new Instruction(Instruction.LOAD, 2, 0),
+    /* 25 */    new Instruction(Instruction.LOAD, 1, 0),
+    /* 26 */    new Instruction(Instruction.ADD),
+    /* 27 */    new Instruction(Instruction.STORE,2,0),
+    /* 28 */    new Instruction(Instruction.GOTO,15),
+
+    /* 29 */    new Instruction(Instruction.LOAD, 2, 0),
+    /* 30 */    new Instruction(Instruction.LOAD, 1, 0),
+    /* 31 */    new Instruction(Instruction.SUB),
+    /* 32 */    new Instruction(Instruction.STORE,2,0),
+    /* 33 */    new Instruction(Instruction.LOAD, 0, 0),
+    /* 34 */    new Instruction(Instruction.LOAD, 2, 0),
+    /* 35 */    new Instruction(Instruction.SUB),
+    /* 36 */    new Instruction(Instruction.RETURN),
 	};
-			
-	/*
-	int i = 0;
-		
-		while( i <= a)
-		{
-			i += b;
-		}
-		
-		i -= b;
-		
-		return a-i;
-	 */
-			
-	
 }
