@@ -6,8 +6,10 @@ package de.unitrier.st.uap.s18.tram.TRAM;
 
 import de.unitrier.st.uap.s18.tram.Instruction;
 import de.unitrier.st.uap.s18.tram.Program;
+import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PatternLayout;
 
 public class TRAMThread implements Runnable{
 
@@ -25,6 +27,7 @@ public class TRAMThread implements Runnable{
         this.PP = program.getPP();
         this.TOP = program.getTOP();
         this.PC = program.getPC();
+        this.logger.addAppender(new ConsoleAppender(new PatternLayout("%d{dd MMM yyyy HH:mm:ss} [%t] - %m%n")));
     }
 
     @Override

@@ -44,10 +44,6 @@
         <delete includeemptydirs="true">
             <fileset dir = "${basedir}" defaultexcludes="false" includes="**/META-INF/"/>
         </delete>
-        <delete includeemptydirs="true">
-            <fileset dir = "${basedir}" defaultexcludes="false" includes="**/lib/"/>
-        </delete>
-
         <delete>
             <fileset dir = "${basedir}" includes="${ant.project.name}.jar"/>
         </delete>
