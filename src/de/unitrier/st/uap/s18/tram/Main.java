@@ -19,5 +19,7 @@ final class Main
         //t.startProgram(new Program(Instruction.program3,-1,0,0));
         //t.startProgram(new Program(Instruction.program4,-1,0,0));
 		t.startProgram(new Program(Instruction.programEuclid,-1,0,0));
+		
+		t.shutdown();
 	}
 }
