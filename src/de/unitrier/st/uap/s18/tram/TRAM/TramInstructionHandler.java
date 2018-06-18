@@ -63,7 +63,7 @@ public class TramInstructionHandler {
         thread.PC++;
     }
 
-    void handleMul()
+    void handleMult()
     {
         thread.STACK.set(thread.TOP -1 , thread.STACK.get(thread.TOP-1) * thread.STACK.get(thread.TOP));
         thread.TOP--;
@@ -88,9 +88,31 @@ public class TramInstructionHandler {
         thread.PC++;
     }
 
+    void handleLte()
+    {
+        if (thread.STACK.get(thread.TOP - 1) <= thread.STACK.get(thread.TOP))
+            thread.STACK.set(thread.TOP - 1,1);
+        else
+            thread.STACK.set(thread.TOP - 1,0);
+
+        thread.TOP--;
+        thread.PC++;
+    }
+
     void handleGt()
     {
         if (thread.STACK.get(thread.TOP - 1) > thread.STACK.get(thread.TOP))
+            thread.STACK.set(thread.TOP - 1,1);
+        else
+            thread.STACK.set(thread.TOP - 1,0);
+
+        thread.TOP--;
+        thread.PC++;
+    }
+
+    void handleGte()
+    {
+        if (thread.STACK.get(thread.TOP - 1) >= thread.STACK.get(thread.TOP))
             thread.STACK.set(thread.TOP - 1,1);
         else
             thread.STACK.set(thread.TOP - 1,0);
@@ -121,6 +143,28 @@ public class TramInstructionHandler {
         thread.PC++;
     }
 
+    void handleAND()
+    {
+        if (thread.STACK.get(thread.TOP - 1) != 0 &&  thread.STACK.get(thread.TOP) != 0)
+            thread.STACK.set(thread.TOP - 1,1);
+        else
+            thread.STACK.set(thread.TOP - 1,0);
+
+        thread.TOP--;
+        thread.PC++;
+    }
+
+    void handleOR()
+    {
+        if (thread.STACK.get(thread.TOP - 1) != 0 ||  thread.STACK.get(thread.TOP) != 0)
+            thread.STACK.set(thread.TOP - 1,1);
+        else
+            thread.STACK.set(thread.TOP - 1,0);
+
+        thread.TOP--;
+        thread.PC++;
+    }
+
     void handleIfZero(int a1)
     {
         if (thread.STACK.get(thread.TOP) == 0)
@@ -143,6 +187,12 @@ public class TramInstructionHandler {
 
     void handleNop()
     {
+        thread.PC++;
+    }
+
+    void handlePop()
+    {
+        thread.TOP--;
         thread.PC++;
     }
 

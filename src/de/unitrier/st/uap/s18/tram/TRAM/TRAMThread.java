@@ -6,8 +6,8 @@ package de.unitrier.st.uap.s18.tram.TRAM;
 
 import de.unitrier.st.uap.s18.tram.Instruction;
 import de.unitrier.st.uap.s18.tram.Program;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 public class TRAMThread implements Runnable{
 
@@ -67,7 +67,7 @@ public class TRAMThread implements Runnable{
             case Instruction.STORE : handler.handleStore(inst.getArg1(),inst.getArg2());break;
             case Instruction.ADD : handler.handleAdd();break;
             case Instruction.SUB : handler.handleSub();break;
-            case Instruction.MUL : handler.handleMul();break;
+            case Instruction.MULT: handler.handleMult();break;
             case Instruction.DIV : handler.handleDiv();break;
             case Instruction.LT : handler.handleLt();break;
             case Instruction.GT : handler.handleGt();break;
@@ -79,6 +79,11 @@ public class TRAMThread implements Runnable{
             case Instruction.NOP : handler.handleNop();break;
             case Instruction.INVOKE : handler.handleInvoke(inst.getArg1(),inst.getArg2(),inst.getArg3());break;
             case Instruction.RETURN : handler.handleReturn();break;
+            case Instruction.POP : handler.handlePop();break;
+            case Instruction.AND : handler.handleAND();break;
+            case Instruction.OR : handler.handleOR();break;
+            case Instruction.GTE : handler.handleGte();break;
+            case Instruction.LTE : handler.handleLte();break;
         }
     }
 

@@ -8,8 +8,7 @@
 
 package de.unitrier.st.uap.s18.tram;
 
-public class Instruction
-{
+public class Instruction {
 	private int opcode;
 	private Integer arg1;
 	private Integer arg2;
@@ -20,7 +19,7 @@ public class Instruction
 	public final static int STORE = 3;
 	public final static int ADD = 4;
 	public final static int SUB = 5;
-	public final static int MUL = 6;
+	public final static int MULT = 6;
 	public final static int DIV = 7;
 	public final static int LT = 8;
 	public final static int GT = 9;
@@ -32,90 +31,81 @@ public class Instruction
 	public final static int NOP = 15;
 	public final static int INVOKE = 16;
 	public final static int RETURN = 17;
+	public final static int POP = 18;
+	public final static int AND = 19;
+	public final static int OR = 20;
+	public final static int GTE = 21;
+	public final static int LTE = 22;
 
 
-	public Instruction(int opcode, Integer arg1, Integer arg2, Integer arg3)
-	{
+	public Instruction(int opcode, Integer arg1, Integer arg2, Integer arg3) {
 		this(opcode, arg1, arg2);
 		this.arg3 = arg3;
 	}
 
 
-	public Instruction(int opcode, Integer arg1, Integer arg2)
-	{
+	public Instruction(int opcode, Integer arg1, Integer arg2) {
 		this(opcode, arg1);
 		this.arg2 = arg2;
 	}
 
 
-	public Instruction(int opcode, Integer arg1)
-	{
+	public Instruction(int opcode, Integer arg1) {
 		this(opcode);
 		this.arg1 = arg1;
 	}
 
 
-	public Instruction(int opcode)
-	{
+	public Instruction(int opcode) {
 		this.opcode = opcode;
 	}
 
 
-	public int getArg1()
-	{
+	public int getArg1() {
 		return arg1;
 	}
 
 
-	public void setArg1(Integer arg1)
-	{
+	public void setArg1(Integer arg1) {
 		this.arg1 = arg1;
 	}
 
 
-	public int getArg2()
-	{
+	public int getArg2() {
 		return arg2;
 	}
 
 
-	public void setArg2(Integer arg2)
-	{
+	public void setArg2(Integer arg2) {
 		this.arg2 = arg2;
 	}
 
 
-	public int getArg3()
-	{
+	public int getArg3() {
 		return arg3;
 	}
 
 
-	public void setArg3(Integer arg3)
-	{
+	public void setArg3(Integer arg3) {
 		this.arg3 = arg3;
 	}
 
 
-	public int getOpcode()
-	{
+	public int getOpcode() {
 		return opcode;
 	}
 
 
-	public void setOpcode(int opcode)
-	{
+	public void setOpcode(int opcode) {
 		this.opcode = opcode;
 	}
 
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		String retStr = "";
 
-		switch (opcode)
-		{
+		switch (opcode) {
 			case Instruction.CONST:
 				retStr += "CONST";
 				break;
@@ -131,8 +121,8 @@ public class Instruction
 			case Instruction.SUB:
 				retStr += "SUB";
 				break;
-			case Instruction.MUL:
-				retStr += "MUL";
+			case Instruction.MULT:
+				retStr += "MULT";
 				break;
 			case Instruction.DIV:
 				retStr += "DIV";
@@ -167,20 +157,32 @@ public class Instruction
 			case Instruction.RETURN:
 				retStr += "RETURN";
 				break;
+			case Instruction.POP:
+				retStr += "POP";
+				break;
+			case Instruction.AND:
+				retStr += "AND";
+				break;
+			case Instruction.OR:
+				retStr += "OR";
+				break;
+			case Instruction.GTE:
+				retStr += "GTE";
+				break;
+			case Instruction.LTE:
+				retStr += "LTE";
+				break;
 			default:
 				retStr += "ERROR";
 		}
 
-		if (arg1 != null)
-		{
+		if (arg1 != null) {
 			retStr += " " + arg1;
 
-			if (arg2 != null)
-			{
+			if (arg2 != null) {
 				retStr += " " + arg2;
 
-				if (arg3 != null)
-				{
+				if (arg3 != null) {
 					retStr += " " + arg3;
 				}
 			}
@@ -204,10 +206,10 @@ public class Instruction
 			new Instruction(Instruction.STORE, 0, 0), // store x
 			new Instruction(Instruction.LOAD, 0, 0), 
 			new Instruction(Instruction.CONST, 3),
-			new Instruction(Instruction.MUL), 
+			new Instruction(Instruction.MULT),
 			new Instruction(Instruction.CONST, 5),
 			new Instruction(Instruction.CONST, 2), 
-			new Instruction(Instruction.MUL),
+			new Instruction(Instruction.MULT),
 			new Instruction(Instruction.ADD), 
 			new Instruction(Instruction.STORE, 1, 0),
 			new Instruction(Instruction.HALT) };
@@ -244,7 +246,7 @@ public class Instruction
 			// square
 			new Instruction(Instruction.LOAD, 0, 0), 
 			new Instruction(Instruction.LOAD, 0, 0),
-			new Instruction(Instruction.MUL), 
+			new Instruction(Instruction.MULT),
 			new Instruction(Instruction.RETURN) // --> return
 	};
 
@@ -274,7 +276,7 @@ public class Instruction
 			// square
 			new Instruction(Instruction.LOAD, 0, 0), 
 			new Instruction(Instruction.LOAD, 0, 0),
-			new Instruction(Instruction.MUL), 
+			new Instruction(Instruction.MULT),
 			new Instruction(Instruction.LOAD, 1, 1),
 			new Instruction(Instruction.GT), 
 			new Instruction(Instruction.IFZERO, 15),
@@ -282,7 +284,7 @@ public class Instruction
 			new Instruction(Instruction.RETURN), // --> return square
 			new Instruction(Instruction.LOAD, 0, 0), 
 			new Instruction(Instruction.LOAD, 0, 0),
-			new Instruction(Instruction.MUL), 
+			new Instruction(Instruction.MULT),
 			new Instruction(Instruction.RETURN) // --> return square
 	};
 
