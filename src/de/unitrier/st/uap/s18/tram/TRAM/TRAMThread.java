@@ -65,23 +65,28 @@ public class TRAMThread implements Runnable{
     private void executeInst(Instruction inst)
     {
         switch (inst.getOpcode()){
-            case Instruction.CONST : handler.handleConst(inst.getArg1()); break;
-            case Instruction.LOAD : handler.handleLoad(inst.getArg1(),inst.getArg2());break;
-            case Instruction.STORE : handler.handleStore(inst.getArg1(),inst.getArg2());break;
-            case Instruction.ADD : handler.handleAdd();break;
-            case Instruction.SUB : handler.handleSub();break;
-            case Instruction.MULT : handler.handleMult();break;
-            case Instruction.DIV : handler.handleDiv();break;
-            case Instruction.LT : handler.handleLt();break;
-            case Instruction.GT : handler.handleGt();break;
+            case Instruction.CONST : handler.handleCONST(inst.getArg1()); break;
+            case Instruction.LOAD : handler.handleLOAD(inst.getArg1(),inst.getArg2());break;
+            case Instruction.STORE : handler.handleSTORE(inst.getArg1(),inst.getArg2());break;
+            case Instruction.ADD : handler.handleADD();break;
+            case Instruction.SUB : handler.handleSUB();break;
+            case Instruction.MULT : handler.handleMULT();break;
+            case Instruction.DIV : handler.handleDIV();break;
+            case Instruction.LT : handler.handleLT();break;
+            case Instruction.GT : handler.handleGT();break;
             case Instruction.EQ : handler.handleEQ();break;
             case Instruction.NEQ : handler.handleNEQ();break;
-            case Instruction.IFZERO : handler.handleIfZero(inst.getArg1());break;
-            case Instruction.GOTO : handler.handleGoto(inst.getArg1());break;
-            case Instruction.HALT : handler.handleHalt();break;
-            case Instruction.NOP : handler.handleNop();break;
-            case Instruction.INVOKE : handler.handleInvoke(inst.getArg1(),inst.getArg2(),inst.getArg3());break;
-            case Instruction.RETURN : handler.handleReturn();break;
+            case Instruction.IFZERO : handler.handleIFZERO(inst.getArg1());break;
+            case Instruction.GOTO : handler.handleGOTO(inst.getArg1());break;
+            case Instruction.HALT : handler.handleHALT();break;
+            case Instruction.NOP : handler.handleNOP();break;
+            case Instruction.INVOKE : handler.handleINVOKE(inst.getArg1(),inst.getArg2(),inst.getArg3());break;
+            case Instruction.RETURN : handler.handleRETURN();break;
+            case Instruction.POP : handler.handlePOP();break;
+            case Instruction.AND : handler.handleAND();
+            case Instruction.OR : handler.handleOR();break;
+            case Instruction.GTE : handler.handleGTE();break;
+            case Instruction.LTE : handler.handleLTE();break;
         }
     }
 
