@@ -70,7 +70,7 @@ public class TRAMThread implements Runnable{
             case Instruction.STORE : handler.handleStore(inst.getArg1(),inst.getArg2());break;
             case Instruction.ADD : handler.handleAdd();break;
             case Instruction.SUB : handler.handleSub();break;
-            case Instruction.MUL : handler.handleMul();break;
+            case Instruction.MULT : handler.handleMult();break;
             case Instruction.DIV : handler.handleDiv();break;
             case Instruction.LT : handler.handleLt();break;
             case Instruction.GT : handler.handleGt();break;
