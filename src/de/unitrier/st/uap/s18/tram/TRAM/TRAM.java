@@ -5,6 +5,7 @@
 package de.unitrier.st.uap.s18.tram.TRAM;
 
 import de.unitrier.st.uap.s18.tram.Program;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -20,6 +21,9 @@ public class TRAM {
     {
         executorService.submit(new TRAMThread(program));
     }
-
-
+    
+    public void shutdown()
+    {
+        executorService.shutdown();
+    }
 }
