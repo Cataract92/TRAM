@@ -32,8 +32,6 @@ public class Instruction {
 	public final static int INVOKE = 16;
 	public final static int RETURN = 17;
 	public final static int POP = 18;
-	public final static int AND = 19;
-	public final static int OR = 20;
 	public final static int GTE = 21;
 	public final static int LTE = 22;
 
@@ -159,12 +157,6 @@ public class Instruction {
 				break;
 			case Instruction.POP:
 				retStr += "POP";
-				break;
-			case Instruction.AND:
-				retStr += "AND";
-				break;
-			case Instruction.OR:
-				retStr += "OR";
 				break;
 			case Instruction.GTE:
 				retStr += "GTE";

@@ -83,8 +83,6 @@ public class TRAMThread implements Runnable{
             case Instruction.INVOKE : handler.handleINVOKE(inst.getArg1(),inst.getArg2(),inst.getArg3());break;
             case Instruction.RETURN : handler.handleRETURN();break;
             case Instruction.POP : handler.handlePOP();break;
-            case Instruction.AND : handler.handleAND();
-            case Instruction.OR : handler.handleOR();break;
             case Instruction.GTE : handler.handleGTE();break;
             case Instruction.LTE : handler.handleLTE();break;
         }

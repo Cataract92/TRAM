@@ -143,28 +143,6 @@ public class TramInstructionHandler {
         thread.PC++;
     }
 
-    void handleAND()
-    {
-        if (thread.STACK.get(thread.TOP - 1) != 0 &&  thread.STACK.get(thread.TOP) != 0)
-            thread.STACK.set(thread.TOP - 1,1);
-        else
-            thread.STACK.set(thread.TOP - 1,0);
-
-        thread.TOP--;
-        thread.PC++;
-    }
-
-    void handleOR()
-    {
-        if (thread.STACK.get(thread.TOP - 1) != 0 ||  thread.STACK.get(thread.TOP) != 0)
-            thread.STACK.set(thread.TOP - 1,1);
-        else
-            thread.STACK.set(thread.TOP - 1,0);
-
-        thread.TOP--;
-        thread.PC++;
-    }
-
     void handleIFZERO(int a1)
     {
         if (thread.STACK.get(thread.TOP) == 0)
